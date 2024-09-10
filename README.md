@@ -7,7 +7,7 @@ git clone https://github.com/pixel-modelers/xfel_project.git
 cd xfel_project
 cmake -B build .
 make -C build -j4 install
-pip install -e
+pip install -e .
 xfel-merge -c -e10 -a2 > xfel_merge_documentation.txt
 ```
 

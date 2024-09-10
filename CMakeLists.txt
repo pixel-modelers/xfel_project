@@ -22,7 +22,6 @@ execute_process(
 )
 
 
-# easyBragg github folder:
 if (NOT DEFINED XFEL_PROJ)
     get_filename_component(XFEL_PROJ ".." REALPATH BASE_DIR "${CMAKE_BINARY_DIR}")
 endif()
