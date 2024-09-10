@@ -3,6 +3,11 @@ project(xfel_project)
 
 set (CMAKE_CXX_STANDARD 14)
 
+# silence warnings
+if (NOT DEFINED SHOW_COMPILE_WARNINGS)
+  add_definitions(-w)
+endif()
+
 # Get Python version information
 execute_process(
   COMMAND python -c "import sys; print(sys.version_info[0])"
@@ -106,6 +111,7 @@ add_library(met_leg_scale OBJECT "${XFEL}/metrology/legacy_scale/ext.cpp")
 add_library(sdfac OBJECT "${XFEL}/merging/algorithms/error_model/sdfac_refine_ext.cpp")
 add_library(mono_sim OBJECT "${XFEL}/mono_simulation/ext.cpp")
 add_library(cluster OBJECT "${XFEL}/clustering/ext.cpp")
+add_library(sx_merge OBJECT "${XFEL}/merging/ext.cpp")
 #add_library(scale_core OBJECT ${XFEL}/metrology/legacy_scale/scale_core.cpp)
 #add_library(bandpass_gaussian OBJECT ${XFEL}/metrology/legacy_scale/bandpass_gaussian.cpp)
 target_include_directories(vonH_xes PRIVATE ${INCS})
@@ -115,6 +121,7 @@ target_include_directories(_ext PRIVATE ${INCS})
 target_include_directories(met_leg_scale PRIVATE ${INCS})
 target_include_directories(sdfac PRIVATE ${INCS})
 target_include_directories(cluster PRIVATE ${INCS})
+target_include_directories(sx_merge PRIVATE ${INCS})
 
 set(CMAKE_SHARED_LIBRARY_PREFIX "")
 set(CMAKE_SHARED_LIBRARY_SUFFIX_CXX ".so")
@@ -125,6 +132,7 @@ add_library(xfel_legacy_scale_ext SHARED)
 add_library(xfel_sdfac_refine_ext SHARED)
 add_library(xfel_mono_sim_ext SHARED)
 add_library(sx_clustering_ext SHARED)
+add_library(sx_merging_ext SHARED)
 
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
@@ -141,6 +149,7 @@ target_link_libraries(xfel_legacy_scale_ext met_leg_scale ${LIBS})
 target_link_libraries(xfel_sdfac_refine_ext sdfac ${LIBS})
 target_link_libraries(xfel_mono_sim_ext mono_sim ${LIBS})
 target_link_libraries(sx_clustering_ext cluster ${LIBS})
+target_link_libraries(sx_merging_ext sx_merge ${LIBS})
 
 set(CMAKE_INSTALL_PREFIX "${XFEL_PROJ}")
 message(">> INSTALL PREFIX: ${CMAKE_INSTALL_PREFIX}")
@@ -152,6 +161,7 @@ set(targets
     xfel_sdfac_refine_ext
     xfel_mono_sim_ext
     sx_clustering_ext
+    sx_merging_ext
     )
 
 # copy extension module to site-packages
