@@ -222,7 +222,9 @@ class Script(object):
     if "correlation" not in self.params.input.persistent_refl_cols:
       self.params.input.persistent_refl_cols.append("correlation")
 
-if __name__ == '__main__':
+def main():
   script = Script()
-
   result = script.run()
+
+if __name__ == '__main__':
+  main()

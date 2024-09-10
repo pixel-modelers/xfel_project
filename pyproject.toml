@@ -5,3 +5,11 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "xfel"
 version = "0.1"
+dependencies = [
+    "scikit-learn",
+    "jinja2"
+]
+
+[project.scripts]
+xfel-merge = "xfel.merging.command_line.merge:main"
+
