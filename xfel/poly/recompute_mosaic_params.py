@@ -4,6 +4,7 @@ from scitbx.matrix import col, sqr
 from serialtbx.mono_simulation import max_like
 import numpy as np
 from scipy import constants
+from scitbx.array_family import flex
 ENERGY_CONV = 1e10*constants.c*constants.h / constants.electron_volt
 
 
