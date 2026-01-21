@@ -1549,7 +1549,10 @@ class ResidualsPlotter(object):
     if show:
       plt.show()
 
-if __name__ == '__main__':
+def main():
   with show_mail_on_error():
     script = Script()
     script.run()
+
+if __name__ == '__main__':
+  main()

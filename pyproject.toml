@@ -14,4 +14,5 @@ dependencies = [
 "cctbx.xfel.merge" = "xfel.merging.command_line.merge:main"
 "cctbx.xfel.itermerge" = "scripts.iter_merge:main"
 "cctbx.xfel.cc12" = "scripts.merge_log_cc12:main"
+"cctbx.xfel.detector_residuals" = "xfel.command_line.detector_residuals:main" 
 
