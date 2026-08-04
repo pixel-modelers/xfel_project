@@ -167,8 +167,6 @@ class simple_file_loader(worker):
         for k in eid.keys():
           del eid[k]
 
-        if self.params.output.expanded_bookkeeping:
-          preGen_experiment_identifiers(experiments, experiments_filename)
         for experiment_id, experiment in enumerate(experiments):
           # select reflections of the current experiment
           refls_sel = reflections['id'] == experiment_id
@@ -177,7 +175,8 @@ class simple_file_loader(worker):
 
           refls_identifier = eid_copy.get(experiment_id, '')
           if identifiers_void(experiment.identifier, refls_identifier) \
-                  or self.params.input.override_identifiers:
+                  or self.params.input.override_identifiers \
+                  or self.params.output.expanded_bookkeeping:
             new_identifier = create_experiment_identifier(
               experiment, experiments_filename, experiment_id)
             experiment.identifier = new_identifier

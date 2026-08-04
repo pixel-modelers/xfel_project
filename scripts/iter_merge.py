@@ -32,8 +32,6 @@ output.output_dir={outdir}
 output.do_timing=True
 output.log_level=1
 
-#output.save_experiments_and_reflections=True
-#output.expanded_bookkeeping=True
     """
     from argparse import ArgumentParser
     parser = ArgumentParser()
@@ -45,6 +43,7 @@ output.log_level=1
     parser.add_argument("--ucell", nargs=6, help="unit cell params a,b,c,alpha,beta,gamma in angstrom and degress", default=None, type=float)
     parser.add_argument("--symbol", type=str, help="space group lookup symbol e.g. P43212", default=None)
     parser.add_argument("--mergeAnom", action="store_true", help="combined +,- miller indices when merging")
+    parser.add_argument("--bookkeeping", action="store_true", help="save expanded bookkeeping (even/odd assignments, per-obs tracking)")
     args = parser.parse_args()
     import os
     import sys
@@ -73,6 +72,14 @@ output.log_level=1
         a,b,c,al,be,ga = args.ucell
         phil_str = phil.format(model=model,mark=mark,outdir=outdir, d_min=args.dmin,
             a=a,b=b,c=c,al=al,be=be,ga=ga, symbol=args.symbol, merge_anom=args.mergeAnom)
+        if args.bookkeeping:
+            phil_str += "\noutput.save_experiments_and_reflections=True"
+            phil_str += "\noutput.expanded_bookkeeping=True"
+            phil_str += "\ninput.override_identifiers=True"
+            phil_str += "\ninput.persistent_refl_cols=xyzcal.px"
+            phil_str += "\ninput.persistent_refl_cols=panel"
+            phil_str += "\ninput.persistent_refl_cols=miller_index"
+            phil_str += "\ninput.persistent_refl_cols=rlp"
         phil_name = "_temp.phil"
         with open(phil_name, "w") as  o:
             o.write(phil_str)
