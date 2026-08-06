@@ -221,6 +221,8 @@ class Script(object):
       self.params.input.persistent_refl_cols.append("correlation_after_post")
     if "correlation" not in self.params.input.persistent_refl_cols:
       self.params.input.persistent_refl_cols.append("correlation")
+    if "scale_factor" not in self.params.input.persistent_refl_cols:
+      self.params.input.persistent_refl_cols.append("scale_factor")
 
 def main():
   script = Script()
