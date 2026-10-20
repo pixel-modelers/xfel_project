@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.2)
 project(xfel_project)
 
-set (CMAKE_CXX_STANDARD 14)
+set (CMAKE_CXX_STANDARD 17)
 
 # silence warnings
 if (NOT DEFINED SHOW_COMPILE_WARNINGS)
@@ -34,13 +34,16 @@ set(PYNUM "${PYMAJ}${PYMIN}")
 set(PY "python${PYMAJ}.${PYMIN}")
 
 find_library(BOOST_PY REQUIRED NAMES boost_python${PYNUM} HINTS "${CONDA}/lib")
-find_library(BOOST_SYS REQUIRED NAMES boost_system HINTS "${CONDA}/lib")
 find_library(BOOST_NP REQUIRED NAMES boost_numpy${PYNUM} HINTS "${CONDA}/lib")
+# boost_system is header-only in Boost >= 1.69, no .so needed
+find_library(BOOST_SYS NAMES boost_system HINTS "${CONDA}/lib")
 set(BOOST_LIBS
     ${BOOST_PY}
-    ${BOOST_SYS}
     ${BOOST_NP}
 )
+if (BOOST_SYS)
+    list(APPEND BOOST_LIBS ${BOOST_SYS})
+endif()
 message(">> Boost libraries found: ${BOOST_LIBS}")
 find_library(CCTBX_LIB REQUIRED NAMES cctbx HINTS "${CONDA}/lib")
 message(">> CCTBX library found: ${CCTBX_LIB}")
